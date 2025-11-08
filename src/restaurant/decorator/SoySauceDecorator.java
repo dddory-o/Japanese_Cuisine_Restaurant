@@ -2,7 +2,7 @@ package restaurant.decorator;
 
 import restaurant.factory.Meal;
 
-public class SoySauceDecorator extends MealDecorator{
+abstract class SoySauceDecorator extends MealDecorator{
     public SoySauceDecorator(Meal decoratedMeal) {
         super(decoratedMeal);
     }
