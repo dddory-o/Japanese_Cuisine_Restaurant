@@ -11,6 +11,6 @@ public class CustomerObserver implements Observer {
 
     @Override
     public void update(String eventType, Meal meal) {
-        System.out.println("Customer " + name + " notified: Your " + meal.getName() + " is " + eventType + ".");
+        System.out.println("Customer " + name + " notified: Your " + meal.getDescription() + " is " + eventType + ".");
     }
 }

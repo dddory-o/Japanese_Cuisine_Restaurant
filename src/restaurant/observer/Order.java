@@ -12,20 +12,20 @@ public class Order {
 
     public void placeOrder(Meal meal) {
         this.meal = meal;
-        System.out.println("Order placed for " + meal.getName());
+        System.out.println("Order placed for " + meal.getDescription());
         manager.notify("placed", meal);
     }
 
     public void prepareOrder() {
         if (meal != null) {
-            System.out.println("Order prepared: " + meal.getName());
+            System.out.println("Order prepared: " + meal.getDescription());
             manager.notify("prepared", meal);
         }
     }
 
     public void deliverOrder() {
         if (meal != null) {
-            System.out.println("Order delivered: " + meal.getName());
+            System.out.println("Order delivered: " + meal.getDescription());
             manager.notify("delivered", meal);
         }
     }
