@@ -3,7 +3,7 @@ package restaurant.visitor;
 import restaurant.factory.meal.Meal;
 
 public interface MealVisitor {
-    void visit(Meal meal);
+    void accept(Meal meal);
 
     int getTotalCalories();
 }

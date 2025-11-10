@@ -5,4 +5,5 @@ import restaurant.visitor.MealVisitor;
 public interface Soup {
     String getDescription();
     double getCost();
+    int getCalories();
 }

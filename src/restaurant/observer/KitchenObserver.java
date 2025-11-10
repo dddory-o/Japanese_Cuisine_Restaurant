@@ -20,4 +20,11 @@ public class KitchenObserver implements Observer {
         }
         System.out.println(".");
     }
+    @Override
+    public void update(Meal decoratedMeal) {
+        System.out.println("Added sauce");
+        if (decoratedMeal != null) {
+            System.out.println(decoratedMeal.getDescription());
+        }
+    }
 }

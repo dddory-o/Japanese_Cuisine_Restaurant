@@ -1,6 +1,6 @@
 package restaurant.decorator;
 
-import restaurant.factory.Meal;
+import restaurant.factory.meal.Meal;
 
 abstract class MealDecorator implements Meal {
     protected Meal decoratedMeal;
@@ -17,5 +17,10 @@ abstract class MealDecorator implements Meal {
     @Override
     public double getCost(){
         return decoratedMeal.getCost();
+    }
+
+    @Override
+    public int getCalories(){
+        return decoratedMeal.getCalories();
     }
 }

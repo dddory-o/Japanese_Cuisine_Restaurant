@@ -1,6 +1,6 @@
 package restaurant.decorator;
 
-import restaurant.factory.Meal;
+import restaurant.factory.meal.Meal;
 
 abstract class WasabiDecorator extends MealDecorator{
     public WasabiDecorator(Meal decoratedMeal) {
@@ -15,5 +15,10 @@ abstract class WasabiDecorator extends MealDecorator{
     @Override
     public double getCost(){
         return decoratedMeal.getCost() + 50;
+    }
+
+    @Override
+    public int getCalories() {
+        return decoratedMeal.getCalories() + 15;
     }
 }
