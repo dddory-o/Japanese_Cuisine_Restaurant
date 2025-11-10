@@ -26,4 +26,11 @@ public class CustomerObserver implements Observer {
         }
         System.out.println(".");
     }
+    @Override
+    public void update(Meal decoratedMeal) {
+        System.out.println("Customer " + customerName + "notified: Your order: ");
+        if (decoratedMeal != null) {
+            System.out.println(decoratedMeal.getDescription());
+        }
+    }
 }

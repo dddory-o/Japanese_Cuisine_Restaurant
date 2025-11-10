@@ -3,7 +3,6 @@ package restaurant.observer;
 import restaurant.factory.drink.Drink;
 import restaurant.factory.meal.Meal;
 import restaurant.factory.soup.Soup;
-
 import java.util.*;
 
 public class OrderManager implements Subject{
@@ -28,10 +27,22 @@ public class OrderManager implements Subject{
             observer.update(meal, drink, soup);
         }
     }
+    @Override
+    public void notifyDecoratedObservers(){
+        for (Observer observer : observers) {
+            observer.update(this.meal);
+        }
+    }
     public void placeOrder(Meal meal, Drink drink, Soup soup) {
         this.meal = meal;
         this.drink = drink;
         this.soup = soup;
         notifyObservers();
     }
+
+    public void addDecorator(Meal decoratedMeal){
+        this.meal = decoratedMeal;
+        notifyDecoratedObservers();
+    }
+
 }

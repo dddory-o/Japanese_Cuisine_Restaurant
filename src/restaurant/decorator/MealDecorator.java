@@ -1,6 +1,6 @@
 package restaurant.decorator;
 
-import restaurant.factory.Meal;
+import restaurant.factory.meal.Meal;
 
 abstract class MealDecorator implements Meal {
     protected Meal decoratedMeal;
