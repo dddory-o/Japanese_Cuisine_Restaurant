@@ -1,6 +1,6 @@
 package restaurant.visitor;
 
-import restaurant.factory.Meal;
+import restaurant.factory.meal.Meal;
 
 public interface MealVisitor {
     void visit(Meal meal);

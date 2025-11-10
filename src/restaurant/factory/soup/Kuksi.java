@@ -1,8 +1,8 @@
-package restaurant.factory;
+package restaurant.factory.soup;
 
-public class SushiBurger implements Meal{
+public class Kuksi implements Soup {
     public String getDescription(){
-        return "Sushi Burger";
+        return "Kuksi";
     }
     public double getCost(){
         return 2000;

@@ -1,6 +1,8 @@
 package restaurant.observer;
 
-import restaurant.factory.Meal;
+import restaurant.factory.drink.Drink;
+import restaurant.factory.meal.Meal;
+import restaurant.factory.soup.Soup;
 
 public class CustomerObserver implements Observer {
     private String customerName;
@@ -10,7 +12,18 @@ public class CustomerObserver implements Observer {
     }
 
     @Override
-    public void update(Meal meal) {
-        System.out.println("Customer " + customerName + " notified: Your " + meal.getDescription() + " is ready.");
+    public void update(Meal meal, Drink drink, Soup soup) {
+        System.out.println("Customer " + customerName + "notified: Your order is ready:");
+
+        if (meal != null) {
+            System.out.println(meal.getDescription());
+        }
+        if (drink != null) {
+            System.out.println(drink.getDescription());
+        }
+        if (soup != null) {
+            System.out.println(soup.getDescription());
+        }
+        System.out.println(".");
     }
 }

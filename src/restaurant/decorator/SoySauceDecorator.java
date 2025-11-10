@@ -1,6 +1,7 @@
 package restaurant.decorator;
 
 import restaurant.factory.Meal;
+import restaurant.visitor.MealVisitor;
 
 abstract class SoySauceDecorator extends MealDecorator{
     public SoySauceDecorator(Meal decoratedMeal) {

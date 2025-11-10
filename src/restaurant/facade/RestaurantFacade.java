@@ -1,7 +1,7 @@
 package restaurant.facade;
 
 import java.util.*;
-import restaurant.factory.Meal;
+import restaurant.factory.meal.Meal;
 
 public class RestaurantFacade {
     public void placeOrder(List<Meal> meals){

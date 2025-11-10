@@ -1,6 +1,6 @@
 package restaurant.strategy;
 
-import restaurant.factory.Meal;
+import restaurant.factory.meal.Meal;
 
 public class FriedPreparation implements PreparationStrategy {
     @Override

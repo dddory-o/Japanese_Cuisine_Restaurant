@@ -1,6 +1,6 @@
 package restaurant.visitor;
 
-import restaurant.factory.Meal;
+import restaurant.factory.meal.Meal;
 
 public class CalorieVisitor implements MealVisitor {
     private int totalCalories = 0;
