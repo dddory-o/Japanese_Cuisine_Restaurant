@@ -1,8 +1,9 @@
 package restaurant.decorator;
 
 import restaurant.factory.meal.Meal;
+import restaurant.visitor.OrderVisitor;
 
-abstract class MealDecorator implements Meal {
+public abstract class MealDecorator implements Meal {
     protected Meal decoratedMeal;
 
     public MealDecorator(Meal decoratedMeal){
@@ -22,5 +23,10 @@ abstract class MealDecorator implements Meal {
     @Override
     public int getCalories(){
         return decoratedMeal.getCalories();
+    }
+
+    @Override
+    public void accept(OrderVisitor visitor){
+        decoratedMeal.accept(visitor);
     }
 }

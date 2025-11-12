@@ -1,5 +1,7 @@
 package restaurant.factory.meal;
 
+import restaurant.visitor.OrderVisitor;
+
 public class Rolls implements Meal {
     public String getDescription(){
         return "Rolls";
@@ -12,5 +14,9 @@ public class Rolls implements Meal {
     }
     public int getCalories(){
         return 900;
+    }
+
+    public void accept(OrderVisitor visitor){
+        visitor.visit(this);
     }
 }

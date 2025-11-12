@@ -1,6 +1,7 @@
 package restaurant.decorator;
 
 import restaurant.factory.soup.Soup;
+import restaurant.visitor.OrderVisitor;
 
 abstract class SoupDecorator implements Soup {
     protected Soup decoratedSoup;
@@ -21,5 +22,10 @@ abstract class SoupDecorator implements Soup {
     @Override
     public int getCalories(){
         return decoratedSoup.getCalories();
+    }
+
+    @Override
+    public void accept(OrderVisitor visitor){
+        decoratedSoup.accept(visitor);
     }
 }

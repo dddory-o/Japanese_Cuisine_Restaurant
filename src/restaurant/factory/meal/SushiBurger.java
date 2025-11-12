@@ -1,6 +1,6 @@
 package restaurant.factory.meal;
 
-import restaurant.visitor.MealVisitor;
+import restaurant.visitor.OrderVisitor;
 
 public class SushiBurger implements Meal{
     public String getDescription(){
@@ -14,5 +14,9 @@ public class SushiBurger implements Meal{
     }
     public int getCalories(){
         return 800;
+    }
+
+    public void accept(OrderVisitor visitor){
+        visitor.visit(this);
     }
 }

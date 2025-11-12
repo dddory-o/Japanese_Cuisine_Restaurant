@@ -1,9 +1,9 @@
 package restaurant.decorator;
 
 import restaurant.factory.meal.Meal;
-import restaurant.visitor.MealVisitor;
+import restaurant.visitor.OrderVisitor;
 
-class SoySauceDecorator extends MealDecorator{
+public class SoySauceDecorator extends MealDecorator{
     public SoySauceDecorator(Meal decoratedMeal) {
         super(decoratedMeal);
     }
@@ -26,5 +26,10 @@ class SoySauceDecorator extends MealDecorator{
     @Override
     public int getCalories(){
         return decoratedMeal.getCalories() + 20;
+    }
+
+    @Override
+    public void accept(OrderVisitor visitor){
+        decoratedMeal.accept(visitor);
     }
 }
