@@ -1,14 +1,15 @@
 package restaurant.strategy;
 
+import restaurant.factory.Product;
 import restaurant.factory.meal.Meal;
 
 public class RawPreparation implements PreparationStrategy{
     @Override
-    public void prepare(Meal meal) {
-        System.out.println("Raw"+meal.getDescription());
+    public void prepare(Product product) {
+        System.out.println("Classic"+product.getDescription()+ "is preparing.");
     }
     @Override
-    public void modifyCalories(Meal meal) {
-        System.out.println("Classic" + meal.getDescription() + "calories" + meal.getCalories());
+    public void modifyCalories(Product product) {
+        System.out.println("Classic" + product.getDescription() + "calories" + product.getCalories());
     }
 }

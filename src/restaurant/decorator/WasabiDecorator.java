@@ -1,30 +1,32 @@
 package restaurant.decorator;
 
+import restaurant.factory.Product;
 import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
-abstract class WasabiDecorator extends MealDecorator{
-    public WasabiDecorator(Meal decoratedMeal) {
-        super(decoratedMeal);
+abstract class WasabiDecorator extends ProductDecorator{
+    public WasabiDecorator(Product decoratedProduct) {
+        super(decoratedProduct);
+        this.addition = "Wasabi";
     }
 
     @Override
     public String getDescription(){
-        return decoratedMeal.getDescription() + ", Wasabi";
+        return decoratedProduct.getDescription() + ", Wasabi";
     }
 
     @Override
     public double getCost(){
-        return decoratedMeal.getCost() + 50;
+        return decoratedProduct.getCost() + 50;
     }
 
     @Override
     public int getCalories() {
-        return decoratedMeal.getCalories() + 15;
+        return decoratedProduct.getCalories() + 15;
     }
 
     @Override
     public void accept(OrderVisitor visitor){
-        decoratedMeal.accept(visitor);
+        decoratedProduct.accept(visitor);
     }
 }

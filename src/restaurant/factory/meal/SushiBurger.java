@@ -3,7 +3,7 @@ package restaurant.factory.meal;
 import restaurant.visitor.OrderVisitor;
 
 public class SushiBurger implements Meal{
-    public String getDescription(){
+    public Meal getDescription(){
         return "Sushi Burger";
     }
     public double getCost(){

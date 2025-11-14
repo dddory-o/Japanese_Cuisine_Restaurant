@@ -1,14 +1,14 @@
 package restaurant.strategy;
 
-import restaurant.factory.meal.Meal;
+import restaurant.factory.Product;
 
 public class FriedPreparation implements PreparationStrategy {
     @Override
-    public void prepare(Meal meal) {
-        System.out.println(meal.getDescription()+"preparing by frying.");
+    public void prepare(Product product) {
+        System.out.println(product.getDescription()+"preparing by frying.");
     }
     @Override
-    public void modifyCalories(Meal meal) {
-        System.out.println("Fried" + meal.getDescription() + "calories" + meal.getCalories() * 1.3);
+    public void modifyCalories(Product product) {
+        System.out.println("Fried" + product.getDescription() + "calories" + product.getCalories() * 1.3);
     }
 }

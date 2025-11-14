@@ -1,35 +1,37 @@
 package restaurant.decorator;
 
+import restaurant.factory.Product;
 import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
-public class SoySauceDecorator extends MealDecorator{
-    public SoySauceDecorator(Meal decoratedMeal) {
-        super(decoratedMeal);
+public class SoySauceDecorator extends ProductDecorator {
+    public SoySauceDecorator(Product decoratedProduct) {
+        super(decoratedProduct);
+        this.addition = "SoySauce";
     }
 
     @Override
     public String getDescription(){
-        return decoratedMeal.getDescription() + ", Soy Sauce";
+        return decoratedProduct.getDescription() + ", Soy Sauce";
     }
 
     @Override
     public double getCost(){
-        return decoratedMeal.getCost() + 100;
+        return decoratedProduct.getCost() + 100;
     }
 
     @Override
     public int getQuantity(){
-        return decoratedMeal.getQuantity();
+        return decoratedProduct.getQuantity();
     }
 
     @Override
     public int getCalories(){
-        return decoratedMeal.getCalories() + 20;
+        return decoratedProduct.getCalories() + 20;
     }
 
     @Override
     public void accept(OrderVisitor visitor){
-        decoratedMeal.accept(visitor);
+        decoratedProduct.accept(visitor);
     }
 }

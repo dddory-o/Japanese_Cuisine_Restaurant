@@ -1,36 +1,45 @@
 package restaurant.observer;
-
+import restaurant.decorator.ProductDecorator;
+import restaurant.factory.Product;
 import restaurant.factory.drink.Drink;
 import restaurant.factory.meal.Meal;
 import restaurant.factory.soup.Soup;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class CustomerObserver implements Observer {
-    private String customerName;
-
-    public CustomerObserver(String name) {
-        this.customerName = name;
-    }
+    private String customerName = "Customer";
 
     @Override
-    public void update(Meal meal, Drink drink, Soup soup) {
-        System.out.println("Customer " + customerName + "notified: Your order is ready:");
+    public void update(Product product) {
 
-        if (meal != null) {
-            System.out.println(meal.getDescription());
+        System.out.println(customerName + ": Your order");
+        Product original = product;
+        while (original instanceof Product dec) {
+            original = dec.getDescription();
         }
-        if (drink != null) {
-            System.out.println(drink.getDescription());
+
+        System.out.println(":" + original.getDescription());
+
+        Product current = product;
+        List<String> additions = new ArrayList<>();
+
+        while (current instanceof ProductDecorator dec) {
+            additions.add(dec.getOwnAddition());
+            current = dec.getDescription();
         }
-        if (soup != null) {
-            System.out.println(soup.getDescription());
+
+        // добавки в правильном порядке
+        Collections.reverse(additions);
+
+        System.out.println("Added:");
+        for (String add : additions) {
+            System.out.println(" + " + add);
         }
-        System.out.println(".");
+
+        System.out.println("Final order: " + product.getDescription());
     }
-    @Override
-    public void update(Meal decoratedMeal) {
-        System.out.println("Customer " + customerName + "notified: Your order: ");
-        if (decoratedMeal != null) {
-            System.out.println(decoratedMeal.getDescription());
-        }
-    }
+
 }

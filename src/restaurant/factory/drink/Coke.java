@@ -1,9 +1,10 @@
 package restaurant.factory.drink;
 
+import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public class Coke implements Drink {
-    public String getDescription(){
+    public Meal getDescription(){
         return "Coke";
     }
     public double getCost(){

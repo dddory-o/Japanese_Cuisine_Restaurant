@@ -1,30 +1,44 @@
 package restaurant.observer;
 
+import restaurant.decorator.ProductDecorator;
+import restaurant.factory.Product;
 import restaurant.factory.drink.Drink;
 import restaurant.factory.meal.Meal;
 import restaurant.factory.soup.Soup;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class KitchenObserver implements Observer {
 
     @Override
-    public void update(Meal meal, Drink drink, Soup soup) {
-        System.out.println("Kitchen recieved new order:");
-        if (meal != null) {
-            System.out.println("- Meal:" + meal.getDescription());
+    public void update(Product product) {
+
+        System.out.println("New order!");
+        Product original = product;
+        while (original instanceof Product dec) {
+            original = dec.getDescription();
         }
-        if (drink != null) {
-            System.out.println("- Drink" + drink.getDescription());
+
+        System.out.println(":" + original.getDescription());
+
+        Product current = product;
+        List<String> additions = new ArrayList<>();
+
+        while (current instanceof ProductDecorator dec) {
+            additions.add(dec.getOwnAddition());
+            current = dec.getDescription();
         }
-        if (soup != null) {
-            System.out.println("- Soup" + soup.getDescription());
+
+        // добавки в правильном порядке
+        Collections.reverse(additions);
+
+        System.out.println("With:");
+        for (String add : additions) {
+            System.out.println(" + " + add);
         }
-        System.out.println(".");
-    }
-    @Override
-    public void update(Meal decoratedMeal) {
-        System.out.println("Added sauce");
-        if (decoratedMeal != null) {
-            System.out.println(decoratedMeal.getDescription());
-        }
+
+        System.out.println("Final order: " + product.getDescription());
     }
 }

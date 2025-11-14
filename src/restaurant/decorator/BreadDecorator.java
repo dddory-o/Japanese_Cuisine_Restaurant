@@ -1,11 +1,13 @@
 package restaurant.decorator;
 
-import restaurant.factory.soup.Soup;
+import restaurant.factory.Product;
+import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
-public class BreadDecorator extends SoupDecorator{
-    public BreadDecorator(Soup decoratedSoup) {
-        super(decoratedSoup);
+public class BreadDecorator extends ProductDecorator{
+    public BreadDecorator(Product decoratedProduct) {
+        super(decoratedProduct);
+        this.addition = "Bread";
     }
     @Override
     public String getDescription() {
@@ -24,6 +26,6 @@ public class BreadDecorator extends SoupDecorator{
 
     @Override
     public void accept(OrderVisitor visitor){
-        decoratedSoup.accept(visitor);
+        decoratedProduct.accept(visitor);
     }
 }

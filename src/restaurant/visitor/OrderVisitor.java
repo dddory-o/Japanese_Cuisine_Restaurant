@@ -1,6 +1,5 @@
 package restaurant.visitor;
 
-import restaurant.decorator.MealDecorator;
 import restaurant.factory.drink.Drink;
 import restaurant.factory.meal.Meal;
 import restaurant.factory.soup.Soup;

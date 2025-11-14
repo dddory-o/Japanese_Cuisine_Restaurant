@@ -1,15 +1,11 @@
 package restaurant.observer;
 
-import restaurant.factory.drink.Drink;
-import restaurant.factory.meal.Meal;
-import restaurant.factory.soup.Soup;
+import restaurant.factory.Product;
 import java.util.*;
 
 public class OrderManager implements Subject{
     private final List<Observer> observers = new ArrayList<>();
-    private Meal meal;
-    private Drink drink;
-    private Soup soup;
+    private Product product;
 
     @Override
     public void addObserver(Observer observer) {
@@ -24,25 +20,12 @@ public class OrderManager implements Subject{
     @Override
     public void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update(meal, drink, soup);
+            observer.update(product);
         }
     }
-    @Override
-    public void notifyDecoratedObservers(){
-        for (Observer observer : observers) {
-            observer.update(this.meal);
-        }
-    }
-    public void placeOrder(Meal meal, Drink drink, Soup soup) {
-        this.meal = meal;
-        this.drink = drink;
-        this.soup = soup;
+
+    public void placeOrder(Product product) {
+        this.product = product;
         notifyObservers();
     }
-
-    public void addDecorator(Meal decoratedMeal){
-        this.meal = decoratedMeal;
-        notifyDecoratedObservers();
-    }
-
 }

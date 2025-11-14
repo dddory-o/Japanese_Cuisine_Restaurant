@@ -1,4 +1,4 @@
 package restaurant.main;
 
-public class Runner {
+public class Demo {
 }

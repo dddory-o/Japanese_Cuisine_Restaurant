@@ -1,13 +1,12 @@
-package restaurant.factory.drink;
+package restaurant.factory;
 
-import restaurant.factory.Product;
 import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
-public interface Drink extends Product {
-    Meal getDescription();
+public interface Product {
+    String getDescription();
+    int getQuantity();
     double getCost();
     int getCalories();
-
     void accept(OrderVisitor visitor);
 }

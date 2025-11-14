@@ -68,8 +68,7 @@ public class RestaurantFacade {
         }
         preparation.prepare(meal.getDescription());
 
-        MealDecorator decoratedMeal = new SoySauceDecorator(new ChopstickDecorator(meal));
-        decoratedMeal.serve();
+        ProductDecorator decoratedProduct = new SoySauceDecorator(new ChopstickDecorator(meal));
 
         PriceVisitor priceVisitor = new PriceVisitor();
         CalorieVisitor calorieVisitor = new CalorieVisitor();
@@ -92,7 +91,6 @@ public class RestaurantFacade {
         System.out.println("Total Price: $" + totalPrice);
         System.out.println("Total Calories: " + totalCalories + " kcal");
 
-        orderManager.placeOrder();
     }
 
     public void showNotifications() {

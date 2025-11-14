@@ -1,9 +1,10 @@
 package restaurant.factory.soup;
 
+import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public class Kuksi implements Soup {
-    public String getDescription(){
+    public Meal getDescription(){
         return "Kuksi";
     }
     public double getCost(){
