@@ -5,7 +5,7 @@ import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public interface Soup extends Product {
-    Meal getDescription();
+    String getDescription();
     double getCost();
     int getCalories();
 

@@ -4,9 +4,15 @@ import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public class MisoSoup implements Soup {
-    public Meal getDescription(){
+    public String getDescription(){
         return "Miso Soup";
     }
+
+    @Override
+    public int getQuantity() {
+        return 1;
+    }
+
     public double getCost(){
         return 1000;
     }

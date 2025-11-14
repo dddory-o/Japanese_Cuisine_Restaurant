@@ -4,8 +4,12 @@ import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public class Kuksi implements Soup {
-    public Meal getDescription(){
+    public String getDescription(){
         return "Kuksi";
+    }
+    @Override
+    public int getQuantity() {
+        return 1;
     }
     public double getCost(){
         return 2000;
