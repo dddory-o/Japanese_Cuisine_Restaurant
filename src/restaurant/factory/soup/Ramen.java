@@ -1,6 +1,5 @@
 package restaurant.factory.soup;
 
-import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public class Ramen implements Soup {

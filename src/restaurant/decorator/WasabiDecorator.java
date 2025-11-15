@@ -1,10 +1,8 @@
 package restaurant.decorator;
 
 import restaurant.factory.Product;
-import restaurant.factory.meal.Meal;
-import restaurant.visitor.OrderVisitor;
 
-abstract class WasabiDecorator extends ProductDecorator{
+public class WasabiDecorator extends ProductDecorator{
     public WasabiDecorator(Product decoratedProduct) {
         super(decoratedProduct);
         this.addition = "Wasabi";
@@ -25,8 +23,4 @@ abstract class WasabiDecorator extends ProductDecorator{
         return decoratedProduct.getCalories() + 15;
     }
 
-    @Override
-    public void accept(OrderVisitor visitor){
-        decoratedProduct.accept(visitor);
-    }
 }

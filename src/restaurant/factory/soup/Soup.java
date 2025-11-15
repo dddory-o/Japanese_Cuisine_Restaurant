@@ -1,7 +1,6 @@
 package restaurant.factory.soup;
 
 import restaurant.factory.Product;
-import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public interface Soup extends Product {

@@ -6,8 +6,7 @@ import restaurant.observer.*;
 import restaurant.strategy.*;
 import restaurant.visitor.*;
 
-
-import java.util.ArrayList;
+import restaurant.factory.Product;
 import java.util.List;
 
 public class RestaurantFacade {
@@ -16,82 +15,146 @@ public class RestaurantFacade {
     private final MealFactory mealFactory;
     private final SoupFactory soupFactory;
     private final OrderManager orderManager;
-    private final List<Observer> observers;
 
     public RestaurantFacade() {
         this.drinkFactory = new DrinkFactoryImpl();
         this.mealFactory = new MealFactoryImpl();
         this.soupFactory = new SoupFactoryImpl();
         this.orderManager = new OrderManager();
-        this.observers = new ArrayList<>();
 
-        // Add restaurant observers
-        observers.add(new KitchenObserver());
-        observers.add(new CustomerObserver());
+        orderManager.addObserver(new KitchenObserver());
+        orderManager.addObserver(new CustomerObserver());
 
-        // Register observers in order manager
-        for (Observer o : observers) {
-            orderManager.addObserver(o);
-        }
     }
 
     public void showMenu() {
         System.out.println("----- JAPANESE CUISINE MENU -----");
+
         System.out.println("Meals:");
-        System.out.println("1. " + mealFactory.createMeal("Sushi").getDescription());
-        System.out.println("2. " + mealFactory.createMeal("Rolls").getDescription());
-        System.out.println("3. " + mealFactory.createMeal("SushiBurger").getDescription());
+        printSafeMeal("sushi");
+        printSafeMeal("rolls");
+        printSafeMeal("sushi burger");
 
         System.out.println("\nSoups:");
-        System.out.println("1. " + soupFactory.createSoup("Ramen").getDescription());
-        System.out.println("2. " + soupFactory.createSoup("Kuksi").getDescription());
-        System.out.println("3. " + soupFactory.createSoup("MisoSoup").getDescription());
+        printSafeSoup("ramen");
+        printSafeSoup("kuksi");
+        printSafeSoup("miso soup");
 
         System.out.println("\nDrinks:");
-        System.out.println("1. " + drinkFactory.createDrink("Coke").getDescription());
-        System.out.println("2. " + drinkFactory.createDrink("Sprite").getDescription());
-        System.out.println("3. " + drinkFactory.createDrink("Fanta").getDescription());
+        printSafeDrink("coke");
+        printSafeDrink("sprite");
+        printSafeDrink("fanta");
     }
 
-    public void placeOrder(String mealType, String soupType, String drinkType, String preparationType) {
+    private void printSafeMeal(String name) {
+        var meal = mealFactory.createMeal(name);
+        if (meal != null) System.out.println(" - " + meal.getDescription());
+    }
+
+    private void printSafeSoup(String name) {
+        var soup = soupFactory.createSoup(name);
+        if (soup != null) System.out.println(" - " + soup.getDescription());
+    }
+
+    private void printSafeDrink(String name) {
+        var drink = drinkFactory.createDrink(name);
+        if (drink != null) System.out.println(" - " + drink.getDescription());
+    }
+
+
+
+    public void placeOrder(String mealType, String soupType, String drinkType, String preparationType, List<String> additions) {
         System.out.println("\n--- New Order ---");
 
-        var meal = mealFactory.createMeal(mealType);
-        var soup = soupFactory.createSoup(soupType);
-        var drink = drinkFactory.createDrink(drinkType);
+        var meal = mealFactory.createMeal(mealType.trim().toLowerCase());
+        var soup = soupFactory.createSoup(soupType.trim().toLowerCase());
+        var drink = drinkFactory.createDrink(drinkType.trim().toLowerCase());
 
-        PreparationStrategy preparation;
-        switch (preparationType.toLowerCase()) {
-            case "fried" -> preparation = new FriedPreparation();
-            case "baked" -> preparation = new BakedPreparation();
-            default -> preparation = new RawPreparation();
+        if (meal == null && soup == null && drink == null) {
+            System.out.println("No valid items in the order!");
+            return;
         }
-        preparation.prepare(meal.getDescription());
+        Product decoratedProduct = null;
+        if (meal != null) {
+            decoratedProduct = meal; // start with the original meal
 
-        ProductDecorator decoratedProduct = new SoySauceDecorator(new ChopstickDecorator(meal));
+            if (additions != null) {
+                for (String add : additions) {
+                    switch (add.toLowerCase()) {
+                        case "bread" -> decoratedProduct = new BreadDecorator(decoratedProduct);
+                        case "wasabi" -> decoratedProduct = new WasabiDecorator(decoratedProduct);
+                        case "soysauce" -> decoratedProduct = new SoySauceDecorator(decoratedProduct);
+                        case "chopsticks" -> decoratedProduct = new ChopstickDecorator(decoratedProduct);
+                    }
+                }
+            }
+        }
 
+
+        // --- Apply preparation strategy (only for meals) ---
+        if (meal != null) {
+            PreparationStrategy preparation = switch (preparationType.toLowerCase()) {
+                case "fried" -> new FriedPreparation();
+                case "baked" -> new BakedPreparation();
+                default -> new RawPreparation();
+            };
+            preparation.prepare(meal);
+        }
+
+        // --- Decorators (add optional extras) ---
+        ProductDecorator decoratedMeal = null;
+        if (meal != null) {
+            decoratedMeal = new SoySauceDecorator(
+                    new ChopstickDecorator(
+                            new BreadDecorator(meal) // you can add/remove decorators here
+                    )
+            );
+        }
+
+        ProductDecorator decoratedSoup = null;
+        if (soup != null) {
+            decoratedSoup = new SoySauceDecorator(
+                    new ChopstickDecorator(soup)
+            );
+        }
+
+        ProductDecorator decoratedDrink = null;
+        if (drink != null) {
+            decoratedDrink = new SoySauceDecorator(drink); // just for demonstration
+        }
+
+        // --- Visitors ---
         PriceVisitor priceVisitor = new PriceVisitor();
         CalorieVisitor calorieVisitor = new CalorieVisitor();
 
-        meal.accept(priceVisitor);
-        soup.accept(priceVisitor);
-        drink.accept(priceVisitor);
+        if (decoratedMeal != null) {
+            decoratedMeal.accept(priceVisitor);
+            decoratedMeal.accept(calorieVisitor);
+        }
+        if (decoratedSoup != null) {
+            decoratedSoup.accept(priceVisitor);
+            decoratedSoup.accept(calorieVisitor);
+        }
+        if (decoratedDrink != null) {
+            decoratedDrink.accept(priceVisitor);
+            decoratedDrink.accept(calorieVisitor);
+        }
 
-        meal.accept(calorieVisitor);
-        soup.accept(calorieVisitor);
-        drink.accept(calorieVisitor);
-
-        double totalPrice = priceVisitor.getTotalCost();
-        double totalCalories = calorieVisitor.getTotalCalories();
-
+        // --- Order summary ---
         System.out.println("\nOrder summary:");
-        System.out.println("Meal: " + meal.getDescription());
-        System.out.println("Soup: " + soup.getDescription());
-        System.out.println("Drink: " + drink.getDescription());
-        System.out.println("Total Price: $" + totalPrice);
-        System.out.println("Total Calories: " + totalCalories + " kcal");
+        if (decoratedMeal != null) System.out.println("Meal: " + decoratedMeal.getDescription());
+        if (decoratedSoup != null) System.out.println("Soup: " + decoratedSoup.getDescription());
+        if (decoratedDrink != null) System.out.println("Drink: " + decoratedDrink.getDescription());
 
+        System.out.println("Total Price: " + priceVisitor.getTotalCost());
+        System.out.println("Total Calories: " + calorieVisitor.getTotalCalories());
+
+        // --- Notify observers ---
+        if (decoratedMeal != null) orderManager.placeOrder(decoratedMeal);
+        if (decoratedSoup != null) orderManager.placeOrder(decoratedSoup);
+        if (decoratedDrink != null) orderManager.placeOrder(decoratedDrink);
     }
+
 
     public void showNotifications() {
         System.out.println("\n--- Notifications ---");

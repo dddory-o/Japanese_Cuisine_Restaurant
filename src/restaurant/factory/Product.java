@@ -1,6 +1,5 @@
 package restaurant.factory;
 
-import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 
 public interface Product {

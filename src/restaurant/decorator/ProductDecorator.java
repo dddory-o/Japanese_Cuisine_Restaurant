@@ -1,21 +1,26 @@
 package restaurant.decorator;
 
 import restaurant.factory.Product;
-import restaurant.factory.meal.Meal;
 import restaurant.visitor.OrderVisitor;
 public abstract class ProductDecorator implements Product {
-    protected Product decoratedProduct;
+    protected final Product decoratedProduct;
     protected String addition;
-    public String getOwnAddition() {
-        return addition;
-    }
     public ProductDecorator(Product decoratedProduct) {
         this.decoratedProduct = decoratedProduct;
     }
+    public String getOwnAddition() {
+        return addition;
+    }
+
+    public Product getWrappedProduct() {
+        return decoratedProduct;
+    }
+
     @Override
     public String getDescription(){
         return decoratedProduct.getDescription();
     }
+
     @Override
     public int getQuantity(){
         return decoratedProduct.getQuantity();
